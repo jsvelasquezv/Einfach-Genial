@@ -1,0 +1,27 @@
+{
+  "name": "Einfach-Genial",
+  "version": "1.0.0",
+  "description": "Implementation of minimax algorithm for Einfach-Genial",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "webpack"
+  },
+  "keywords": [
+    "minimax",
+    "algorithms",
+    "ai"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jquery": "^2.0.41",
+    "awesome-typescript-loader": "^3.1.2",
+    "electron": "~1.6.2",
+    "typescript": "^2.2.2",
+    "webpack": "^2.4.1"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
