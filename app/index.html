@@ -9,6 +9,56 @@
     <script src="bundle.js"></script>
 </head>
 <body>
+    <div class="table">
+
+    
+    <div class="player player1">
+        <h1>Jugador 1</h1>
+        <div class="score">
+            <ul>
+                <li>Rojo:</li>
+                <li>Verde:</li>
+                <li>Violeta:</li>
+                <li>Azul:</li>
+                <li>Amarillo:</li>
+                <li>Naranja:</li>
+            </ul>
+        </div>
+        <div class="pieces">
+            <ul class="piece" data-role="piece" data-piece-id="1" data-left-color="green" data-right-color="violet">
+                <li class="hex">
+                    <div class="hexIn">
+                        <a href="#" class="hexLink">
+                            <img src="assets/img/verde.png" alt="">
+                        </a>
+                    </div>
+                </li>
+                <li class="hex">
+                    <div class="hexIn">
+                        <a href="#" class="hexLink">
+                            <img src="assets/img/morado.png" alt="">
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="piece" data-role="piece" data-left-color="violet" data-right-color="blue">
+                <li class="hex">
+                    <div class="hexIn">
+                        <a href="#" class="hexLink">
+                            <img src="assets/img/morado.png" alt="">
+                        </a>
+                    </div>
+                </li>
+                <li class="hex">
+                    <div class="hexIn">
+                        <a href="#" class="hexLink">
+                            <img src="assets/img/azul.png" alt="">
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
     <ul id="hexGrid">
       
       <li class="hex">
@@ -35,224 +85,42 @@
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/rojo.png" alt="">
+                <img data-coord-x="0" data-coord-y="-5" data-role="board-cell" data-color="red" src="assets/img/rojo.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="1" data-coord-y="-5" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="2" data-coord-y="-5" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="3" data-coord-y="-5" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="4" data-coord-y="-5" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/verde.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-            
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-            
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-            
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-            
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-            
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-            
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-            
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-            
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-            
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="5" data-coord-y="-5" data-role="board-cell" src="assets/img/verde.png" alt="">
             </a>
         </div>
       </li>
@@ -287,63 +155,245 @@
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+            
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+            
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-1" data-coord-y="-4" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="0" data-coord-y="-4" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="1" data-coord-y="-4" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="2" data-coord-y="-4" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="3" data-coord-y="-4" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="4" data-coord-y="-4" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="5" data-coord-y="-4" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+            
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+            
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+            
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+            
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+            
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="-2" data-coord-y="-3" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="-1" data-coord-y="-3" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="0" data-coord-y="-3" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="1" data-coord-y="-3" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="2" data-coord-y="-3" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="3" data-coord-y="-3" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="4" data-coord-y="-3" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="5" data-coord-y="-3" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+            
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+            
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="-3" data-coord-y="-2" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="-2" data-coord-y="-2" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="-1" data-coord-y="-2" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="0" data-coord-y="-2" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="1" data-coord-y="-2" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="2" data-coord-y="-2" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="3" data-coord-y="-2" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="4" data-coord-y="-2" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="5" data-coord-y="-2" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
@@ -371,77 +421,70 @@
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-4" data-coord-y="-1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-3" data-coord-y="-1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-2" data-coord-y="-1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-1" data-coord-y="-1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="0" data-coord-y="-1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="1" data-coord-y="-1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="2" data-coord-y="-1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="3" data-coord-y="-1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="4" data-coord-y="-1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-            
+                <img data-coord-x="5" data-coord-y="-1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
@@ -455,161 +498,84 @@
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/morado.png" alt="">
+            
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-5" data-coord-y="0" data-role="board-cell" src="assets/img/morado.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-4" data-coord-y="0" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-3" data-coord-y="0" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-2" data-coord-y="0" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-1" data-coord-y="0" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="0" data-coord-y="0" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="1" data-coord-y="0" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="2" data-coord-y="0" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="3" data-coord-y="0" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/azul.png" alt="">
+                <img data-coord-x="4" data-coord-y="0" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
-            </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-            <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="5" data-coord-y="0" data-role="board-cell" src="assets/img/azul.png" alt="">
             </a>
         </div>
       </li>
@@ -630,70 +596,70 @@
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-
+                <img data-coord-x="-4" data-coord-y="1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-3" data-coord-y="1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-2" data-coord-y="1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-1" data-coord-y="1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="0" data-coord-y="1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="1" data-coord-y="1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="2" data-coord-y="1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="3" data-coord-y="1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="4" data-coord-y="1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="5" data-coord-y="1" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
@@ -721,63 +687,63 @@
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-
+                <img data-coord-x="-3" data-coord-y="2" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-2" data-coord-y="2" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-1" data-coord-y="2" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="0" data-coord-y="2" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="1" data-coord-y="2" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="2" data-coord-y="2" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="3" data-coord-y="2" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="4" data-coord-y="2" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="5" data-coord-y="2" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
@@ -812,56 +778,56 @@
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-
+                <img data-coord-x="-2" data-coord-y="3" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="-1" data-coord-y="3" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="0" data-coord-y="3" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="1" data-coord-y="3" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="2" data-coord-y="3" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="3" data-coord-y="3" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="4" data-coord-y="3" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+                <img data-coord-x="5" data-coord-y="3" data-role="board-cell" src="assets/img/empty.png" alt="">
             </a>
         </div>
       </li>
@@ -903,6 +869,55 @@
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
+                <img data-coord-x="-1" data-coord-y="4" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="0" data-coord-y="4" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="1" data-coord-y="4" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="2" data-coord-y="4" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="3" data-coord-y="4" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="4" data-coord-y="4" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="5" data-coord-y="4" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
 
             </a>
         </div>
@@ -910,42 +925,77 @@
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/amarillo.png" alt="">
+
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/empty.png" alt="">
+
             </a>
         </div>
       </li>
       <li class="hex">
         <div class="hexIn">
             <a href="#" class="hexLink">
-                <img src="assets/img/naranja.png" alt="">
+                <img data-coord-x="0" data-coord-y="5" data-role="board-cell" src="assets/img/amarillo.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="1" data-coord-y="5" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="2" data-coord-y="5" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="3" data-coord-y="5" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="4" data-coord-y="5" data-role="board-cell" src="assets/img/empty.png" alt="">
+            </a>
+        </div>
+      </li>
+      <li class="hex">
+        <div class="hexIn">
+            <a href="#" class="hexLink">
+                <img data-coord-x="5" data-coord-y="5" data-role="board-cell" src="assets/img/naranja.png" alt="">
             </a>
         </div>
       </li>
@@ -958,5 +1008,53 @@
       </li>
 
     </ul>
+    <div class="player player1">
+        <h1>Jugador 2</h1>
+        <div class="score">
+            <ul>
+                <li>Rojo:</li>
+                <li>Verde:</li>
+                <li>Violeta:</li>
+                <li>Azul:</li>
+                <li>Amarillo:</li>
+                <li>Naranja:</li>
+            </ul>
+        </div>
+        <div class="pieces">
+            <ul class="piece">
+                <li class="hex">
+                    <div class="hexIn">
+                        <a href="#" class="hexLink">
+                            <img src="assets/img/rojo.png" alt="">
+                        </a>
+                    </div>
+                </li>
+                <li class="hex">
+                    <div class="hexIn">
+                        <a href="#" class="hexLink">
+                            <img src="assets/img/amarillo.png" alt="">
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="piece">
+                <li class="hex">
+                    <div class="hexIn">
+                        <a href="#" class="hexLink">
+                            <img src="assets/img/azul.png" alt="">
+                        </a>
+                    </div>
+                </li>
+                <li class="hex">
+                    <div class="hexIn">
+                        <a href="#" class="hexLink">
+                            <img src="assets/img/naranja.png" alt="">
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
 </body>
 </html>

@@ -1,0 +1,28 @@
+* {
+  font-family: 'Raleway', sans-serif;  
+}
+
+.table {
+    display: flex;
+}
+
+.player {
+    width: 20%;
+    background-color: lightslategray;
+}
+
+.player .hex {
+    width: 20%;
+}
+
+.piece {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 30px auto;
+  list-style-type: none;
+}
+
+.score ul{
+    list-style: none;
+}
