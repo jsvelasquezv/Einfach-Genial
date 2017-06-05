@@ -20,8 +20,7 @@ class Player {
     public showScores() {
         for (let key in this.scores) {
             let score = this.scores[key];
-            let domElement = $(`span[data-player-id="${this.id}"][data-role="score"][data-color="${key}"]`);
-            console.log($(domElement));
+            $(`span[data-player-id="${this.id}"][data-role="score"][data-color="${key}"]`).text(score);
         }
     }
 

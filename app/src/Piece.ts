@@ -18,6 +18,10 @@ class Piece {
         this.cells = cells;
     }
 
+    public getId(): number {
+        return this.id;
+    }
+
     public setCells(cells: Array<Cell>) {
         this.cells = cells;
     }

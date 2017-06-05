@@ -1,5 +1,5 @@
 * {
-  font-family: 'Raleway', sans-serif;  
+  font-family: 'Raleway', sans-serif;
 }
 
 .table {
@@ -21,6 +21,10 @@
   width: 100%;
   margin: 30px auto;
   list-style-type: none;
+}
+
+.player {
+    text-align: center;
 }
 
 .score ul{

@@ -54,6 +54,10 @@ class Board {
         return this.board;
     }
 
+    public getImages(): { [key: string]: string} {
+        return this.images;
+    }
+
     public drawPiece(x: number, y: number, piece: Piece, domElement) {
         let cells = piece.getCells();
         if(cells.length > 0) {
