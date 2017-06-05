@@ -10334,90 +10334,239 @@ return jQuery;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(0);
-var buffer = [];
-var images = {};
-var directions = {};
-var board;
-directions['NO'] = [0, -1];
-directions['O'] = [-1, 0];
-directions['SO'] = [-1, 1];
-directions['NE'] = [1, -1];
-directions['E'] = [1, 0];
-directions['SE'] = [0, 1];
-images['red'] = 'assets/img/rojo.png';
-images['green'] = 'assets/img/verde.png';
-images['violet'] = 'assets/img/morado.png';
-images['blue'] = 'assets/img/azul.png';
-images['yellow'] = 'assets/img/amarillo.png';
-images['orange'] = 'assets/img/naranja.png';
-function neighbor(direction, piece) {
-    var neighbor = false;
-    var dir = directions[direction];
-    var tempHex = [piece[0] + dir[0], piece[1] + dir[1]];
-    if (piece == tempHex) {
-        neighbor = true;
-    }
-    return neighbor;
-}
-function canPlace(piece, x, y) {
-    var canPlace = false;
-    if (piece.type == 'right') {
-        console.log('right');
-        for (var key in directions) {
-            var direction = directions[key];
-            var tempPiece = getPiece(x + direction[0], y + direction[1]);
-            // console.log(tempPiece);
-            if (tempPiece.pieceId == piece.pieceId) {
-                canPlace = true;
-                break;
-            }
-        }
-    }
-    else if (piece.type == 'left') {
-        canPlace = true;
-    }
-    return canPlace;
-}
-function getPiece(x, y) {
-    // let selector = 
-    // let domElement = $(selector);
-    var piece = {
-        'pieceId': $("img[data-coord-x=\"" + x + "\"][data-coord-y=\"" + y + "\"]").attr('data-piece-id')
-    };
-    // console.log(`td[data-coord-x="${x}"][data-coord-y="${y}"]`);
-    // console.log($(`td[data-coord-x="${x}"][data-coord-y="${y}"]`));
-    console.log(piece);
-    return piece;
+var Board_1 = __webpack_require__(3);
+var Piece_1 = __webpack_require__(5);
+var Cell_1 = __webpack_require__(4);
+// let player = new Player("1");
+// player.showScores();
+var pieces;
+var board = new Board_1.Board();
+board.initialize();
+function dealPieces() {
 }
 $(document).on('click', 'img[data-role="board-cell"]', function () {
     var x = $(this).attr('data-coord-x');
     var y = $(this).attr('data-coord-y');
-    if (buffer.length > 0) {
-        var piece = buffer[0];
-        var imageSrc = images[piece.color];
-        if (canPlace(piece, Number(x), Number(y))) {
-            $(this).attr('src', imageSrc);
-            $(this).attr('data-piece-id', piece.pieceId);
-            $(this).attr('data-color', piece.color);
-            buffer.shift();
-        }
+    if (board.getBuffer() != null) {
+        board.drawPiece(Number(x), Number(y), board.getBuffer(), $(this));
     }
 });
 $(document).on('click', 'ul[data-role="piece"]', function () {
-    var pieceId = $(this).attr('data-piece-id');
-    var leftPiece = {
-        'pieceId': pieceId,
-        'type': 'left',
-        'color': $(this).attr('data-left-color')
-    };
-    var rightPiece = {
-        'pieceId': pieceId,
-        'type': 'right',
-        'color': $(this).attr('data-right-color')
-    };
-    buffer = [leftPiece, rightPiece];
-    console.log(buffer);
+    var pieceId = Number($(this).attr('data-piece-id'));
+    var leftColor = $(this).attr('data-left-color');
+    var rightColor = $(this).attr('data-right-color');
+    var leftCell = new Cell_1.Cell(pieceId, 'left', leftColor, 0, 0, "1");
+    var rightCell = new Cell_1.Cell(pieceId, 'right', rightColor, 0, 0, "1");
+    var piece = new Piece_1.Piece(pieceId, leftColor, rightColor, [leftCell, rightCell]);
+    board.setBuffer(piece);
 });
+
+
+/***/ }),
+/* 2 */,
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Cell_1 = __webpack_require__(4);
+/**
+ * Board
+ */
+var Board = (function () {
+    function Board() {
+        this.board = {};
+        this.directions = {};
+        this.images = {};
+        this.directions['NO'] = [0, -1];
+        this.directions['O'] = [-1, 0];
+        this.directions['SO'] = [-1, 1];
+        this.directions['NE'] = [1, -1];
+        this.directions['E'] = [1, 0];
+        this.directions['SE'] = [0, 1];
+        this.images['red'] = 'assets/img/rojo.png';
+        this.images['green'] = 'assets/img/verde.png';
+        this.images['violet'] = 'assets/img/morado.png';
+        this.images['blue'] = 'assets/img/azul.png';
+        this.images['yellow'] = 'assets/img/amarillo.png';
+        this.images['orange'] = 'assets/img/naranja.png';
+    }
+    Board.prototype.initialize = function () {
+        var base = 5;
+        var emptyCell;
+        for (var i = -base; i <= 0; i++) {
+            for (var j = -(base + i); j <= base; j++) {
+                emptyCell = new Cell_1.Cell(0, '', '', j, i, '');
+                this.insertInBoard(j, i, emptyCell);
+            }
+        }
+        for (var i = base; i > 0; i--) {
+            for (var j = -(i - base); j >= -base; j--) {
+                emptyCell = new Cell_1.Cell(0, '', '', j, i, '');
+                this.insertInBoard(j, i, emptyCell);
+            }
+        }
+        this.insertInBoard(0, -5, new Cell_1.Cell(-1, '', 'red', 0, -5, ''));
+        this.insertInBoard(5, -5, new Cell_1.Cell(-1, '', 'green', 5, -5, ''));
+        this.insertInBoard(-5, 0, new Cell_1.Cell(-1, '', 'violet', -5, 0, ''));
+        this.insertInBoard(5, 0, new Cell_1.Cell(-1, '', 'blue', 5, 0, ''));
+        this.insertInBoard(0, 5, new Cell_1.Cell(-1, '', 'yellow', 0, 5, ''));
+        this.insertInBoard(5, 5, new Cell_1.Cell(-1, '', 'orange', 5, 5, ''));
+    };
+    Board.prototype.getBoard = function () {
+        return this.board;
+    };
+    Board.prototype.drawPiece = function (x, y, piece, domElement) {
+        var cells = piece.getCells();
+        if (cells.length > 0) {
+            if (this.drawCell(x, y, cells[0], domElement)) {
+                cells.shift();
+            }
+        }
+    };
+    Board.prototype.drawCell = function (x, y, cell, domElement) {
+        var drawn = false;
+        if (this.canPlace(x, y, cell)) {
+            var tempCell = cell;
+            tempCell.setCoords(x, y);
+            this.insertInBoard(x, y, tempCell);
+            domElement.attr('src', this.images[cell.getColor()]);
+            domElement.attr('data-piece-id', cell.getPieceId());
+            domElement.attr('data-color', cell.getColor());
+            drawn = true;
+        }
+        return drawn;
+    };
+    Board.prototype.canPlace = function (x, y, cell) {
+        var canPlace = false;
+        var endCell = this.getFromBoard(x, y);
+        if (cell.getType() == 'right') {
+            for (var key in this.directions) {
+                var direction = this.directions[key];
+                var neighborCell = this.getFromBoard(x + direction[0], y + direction[1]);
+                if (neighborCell.getPieceId() == cell.getPieceId() && endCell.getPieceId() == 0) {
+                    canPlace = true;
+                    break;
+                }
+            }
+        }
+        else if (cell.getType() == 'left' && endCell.getPieceId() == 0) {
+            canPlace = true;
+        }
+        return canPlace;
+    };
+    Board.prototype.neighbor = function (direction, piece) {
+        var neighbor = false;
+        var dir = this.directions[direction];
+        var tempHex = [piece[0] + dir[0], piece[1] + dir[1]];
+        if (piece == tempHex) {
+            neighbor = true;
+        }
+        return neighbor;
+    };
+    Board.prototype.setBuffer = function (piece) {
+        this.buffer = piece;
+    };
+    Board.prototype.getBuffer = function () {
+        return this.buffer;
+    };
+    Board.prototype.insertInBoard = function (x, y, cell) {
+        var key = "\"" + x + "\"/\"" + y + "\"";
+        this.board[key] = cell;
+    };
+    Board.prototype.getFromBoard = function (x, y) {
+        var key = "\"" + x + "\"/\"" + y + "\"";
+        return this.board[key];
+    };
+    return Board;
+}());
+exports.Board = Board;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Cell
+ */
+var Cell = (function () {
+    function Cell(pieceId, type, color, coordX, coordY, player) {
+        this.pieceId = pieceId;
+        this.type = type;
+        this.color = color;
+        this.coordX = coordX;
+        this.coordY = coordY;
+        this.player = player;
+    }
+    Cell.prototype.getPieceId = function () {
+        return this.pieceId;
+    };
+    Cell.prototype.getType = function () {
+        return this.type;
+    };
+    Cell.prototype.setColor = function (color) {
+        this.color = color;
+    };
+    Cell.prototype.getColor = function () {
+        return this.color;
+    };
+    Cell.prototype.setCoordX = function (x) {
+        this.coordX = x;
+    };
+    Cell.prototype.setCoordY = function (y) {
+        this.coordY = y;
+    };
+    Cell.prototype.setCoords = function (x, y) {
+        this.coordX = x;
+        this.coordY = y;
+    };
+    Cell.prototype.getCoordX = function () {
+        return this.coordX;
+    };
+    Cell.prototype.getCoordY = function () {
+        return this.coordY;
+    };
+    Cell.prototype.getCoords = function () {
+        return [this.coordX, this.coordY];
+    };
+    return Cell;
+}());
+exports.Cell = Cell;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Piece
+ */
+var Piece = (function () {
+    function Piece(id, color1, color2, cells) {
+        this.id = id;
+        this.color1 = color1;
+        this.color2 = color2;
+        this.cells = cells;
+    }
+    Piece.prototype.setCells = function (cells) {
+        this.cells = cells;
+    };
+    Piece.prototype.getCells = function () {
+        return this.cells;
+    };
+    Piece.prototype.createCells = function () {
+    };
+    return Piece;
+}());
+exports.Piece = Piece;
 
 
 /***/ })
