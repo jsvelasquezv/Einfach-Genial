@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -123,163 +123,6 @@ exports.Cell = Cell;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Cell_1 = __webpack_require__(0);
-/**
- * Board
- */
-var Board = (function () {
-    function Board() {
-        this.board = {};
-        this.directions = {};
-        this.images = {};
-        this.directions['NO'] = [0, -1];
-        this.directions['O'] = [-1, 0];
-        this.directions['SO'] = [-1, 1];
-        this.directions['NE'] = [1, -1];
-        this.directions['E'] = [1, 0];
-        this.directions['SE'] = [0, 1];
-        this.images['red'] = 'assets/img/rojo.png';
-        this.images['green'] = 'assets/img/verde.png';
-        this.images['violet'] = 'assets/img/morado.png';
-        this.images['blue'] = 'assets/img/azul.png';
-        this.images['yellow'] = 'assets/img/amarillo.png';
-        this.images['orange'] = 'assets/img/naranja.png';
-    }
-    Board.prototype.initialize = function () {
-        var base = 5;
-        var emptyCell;
-        for (var i = -base; i <= 0; i++) {
-            for (var j = -(base + i); j <= base; j++) {
-                emptyCell = new Cell_1.Cell(0, '', '', j, i, '');
-                this.insertInBoard(j, i, emptyCell);
-            }
-        }
-        for (var i = base; i > 0; i--) {
-            for (var j = -(i - base); j >= -base; j--) {
-                emptyCell = new Cell_1.Cell(0, '', '', j, i, '');
-                this.insertInBoard(j, i, emptyCell);
-            }
-        }
-        this.insertInBoard(0, -5, new Cell_1.Cell(-1, '', 'red', 0, -5, ''));
-        this.insertInBoard(5, -5, new Cell_1.Cell(-1, '', 'green', 5, -5, ''));
-        this.insertInBoard(-5, 0, new Cell_1.Cell(-1, '', 'violet', -5, 0, ''));
-        this.insertInBoard(5, 0, new Cell_1.Cell(-1, '', 'blue', 5, 0, ''));
-        this.insertInBoard(0, 5, new Cell_1.Cell(-1, '', 'yellow', 0, 5, ''));
-        this.insertInBoard(5, 5, new Cell_1.Cell(-1, '', 'orange', 5, 5, ''));
-    };
-    Board.prototype.getBoard = function () {
-        return this.board;
-    };
-    Board.prototype.getImages = function () {
-        return this.images;
-    };
-    Board.prototype.drawPiece = function (x, y, piece, domElement) {
-        var cells = piece.getCells();
-        if (cells.length > 0) {
-            if (this.drawCell(x, y, cells[0], domElement)) {
-                cells.shift();
-            }
-        }
-    };
-    Board.prototype.drawCell = function (x, y, cell, domElement) {
-        var drawn = false;
-        if (this.canPlace(x, y, cell)) {
-            var tempCell = cell;
-            tempCell.setCoords(x, y);
-            this.insertInBoard(x, y, tempCell);
-            domElement.attr('src', this.images[cell.getColor()]);
-            domElement.attr('data-piece-id', cell.getPieceId());
-            domElement.attr('data-color', cell.getColor());
-            drawn = true;
-        }
-        return drawn;
-    };
-    Board.prototype.canPlace = function (x, y, cell) {
-        var canPlace = false;
-        var endCell = this.getFromBoard(x, y);
-        if (cell.getType() == 'right') {
-            for (var key in this.directions) {
-                var direction = this.directions[key];
-                var neighborCell = this.getFromBoard(x + direction[0], y + direction[1]);
-                if (neighborCell.getPieceId() == cell.getPieceId() && endCell.getPieceId() == 0) {
-                    canPlace = true;
-                    break;
-                }
-            }
-        }
-        else if (cell.getType() == 'left' && endCell.getPieceId() == 0) {
-            canPlace = true;
-        }
-        return canPlace;
-    };
-    Board.prototype.neighbor = function (direction, piece) {
-        var neighbor = false;
-        var dir = this.directions[direction];
-        var tempHex = [piece[0] + dir[0], piece[1] + dir[1]];
-        if (piece == tempHex) {
-            neighbor = true;
-        }
-        return neighbor;
-    };
-    Board.prototype.setBuffer = function (piece) {
-        this.buffer = piece;
-    };
-    Board.prototype.getBuffer = function () {
-        return this.buffer;
-    };
-    Board.prototype.insertInBoard = function (x, y, cell) {
-        var key = "\"" + x + "\"/\"" + y + "\"";
-        this.board[key] = cell;
-    };
-    Board.prototype.getFromBoard = function (x, y) {
-        var key = "\"" + x + "\"/\"" + y + "\"";
-        return this.board[key];
-    };
-    return Board;
-}());
-exports.Board = Board;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Piece
- */
-var Piece = (function () {
-    function Piece(id, color1, color2, cells) {
-        this.id = id;
-        this.color1 = color1;
-        this.color2 = color2;
-        this.cells = cells;
-    }
-    Piece.prototype.getId = function () {
-        return this.id;
-    };
-    Piece.prototype.setCells = function (cells) {
-        this.cells = cells;
-    };
-    Piece.prototype.getCells = function () {
-        return this.cells;
-    };
-    Piece.prototype.createCells = function () {
-    };
-    return Piece;
-}());
-exports.Piece = Piece;
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10539,16 +10382,212 @@ return jQuery;
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Cell_1 = __webpack_require__(0);
+/**
+ * Board
+ */
+var Board = (function () {
+    function Board() {
+        this.board = {};
+        this.directions = {};
+        this.images = {};
+        this.directions['NO'] = [0, -1];
+        this.directions['O'] = [-1, 0];
+        this.directions['SO'] = [-1, 1];
+        this.directions['NE'] = [1, -1];
+        this.directions['E'] = [1, 0];
+        this.directions['SE'] = [0, 1];
+        this.images['red'] = 'assets/img/rojo.png';
+        this.images['green'] = 'assets/img/verde.png';
+        this.images['violet'] = 'assets/img/morado.png';
+        this.images['blue'] = 'assets/img/azul.png';
+        this.images['yellow'] = 'assets/img/amarillo.png';
+        this.images['orange'] = 'assets/img/naranja.png';
+    }
+    Board.prototype.initialize = function () {
+        var base = 5;
+        var emptyCell;
+        for (var i = -base; i <= 0; i++) {
+            for (var j = -(base + i); j <= base; j++) {
+                emptyCell = new Cell_1.Cell(0, '', '', j, i, '');
+                this.insertInBoard(j, i, emptyCell);
+            }
+        }
+        for (var i = base; i > 0; i--) {
+            for (var j = -(i - base); j >= -base; j--) {
+                emptyCell = new Cell_1.Cell(0, '', '', j, i, '');
+                this.insertInBoard(j, i, emptyCell);
+            }
+        }
+        this.insertInBoard(0, -5, new Cell_1.Cell(-1, '', 'red', 0, -5, ''));
+        this.insertInBoard(5, -5, new Cell_1.Cell(-1, '', 'green', 5, -5, ''));
+        this.insertInBoard(-5, 0, new Cell_1.Cell(-1, '', 'violet', -5, 0, ''));
+        this.insertInBoard(5, 0, new Cell_1.Cell(-1, '', 'blue', 5, 0, ''));
+        this.insertInBoard(0, 5, new Cell_1.Cell(-1, '', 'yellow', 0, 5, ''));
+        this.insertInBoard(5, 5, new Cell_1.Cell(-1, '', 'orange', 5, 5, ''));
+    };
+    Board.prototype.getBoard = function () {
+        return this.board;
+    };
+    Board.prototype.getImages = function () {
+        return this.images;
+    };
+    Board.prototype.drawPiece = function (x, y, piece, domElement) {
+        var cells = piece.getCells();
+        if (cells.length > 0) {
+            if (this.drawCell(x, y, cells[0], domElement)) {
+                cells.shift();
+            }
+        }
+    };
+    Board.prototype.drawCell = function (x, y, cell, domElement) {
+        var drawn = false;
+        if (this.canPlace(x, y, cell)) {
+            var tempCell = cell;
+            tempCell.setCoords(x, y);
+            this.insertInBoard(x, y, tempCell);
+            domElement.attr('src', this.images[cell.getColor()]);
+            domElement.attr('data-piece-id', cell.getPieceId());
+            domElement.attr('data-color', cell.getColor());
+            drawn = true;
+        }
+        return drawn;
+    };
+    Board.prototype.canPlace = function (x, y, cell) {
+        var canPlace = false;
+        var endCell = this.getFromBoard(x, y);
+        if (cell.getType() == 'right') {
+            for (var key in this.directions) {
+                var direction = this.directions[key];
+                var neighborCell = this.getFromBoard(x + direction[0], y + direction[1]);
+                if (neighborCell.getPieceId() == cell.getPieceId() && endCell.getPieceId() == 0) {
+                    canPlace = true;
+                    break;
+                }
+            }
+        }
+        else if (cell.getType() == 'left' && endCell.getPieceId() == 0) {
+            canPlace = true;
+        }
+        return canPlace;
+    };
+    Board.prototype.neighbor = function (direction, piece) {
+        var neighbor = false;
+        var dir = this.directions[direction];
+        var tempHex = [piece[0] + dir[0], piece[1] + dir[1]];
+        if (piece == tempHex) {
+            neighbor = true;
+        }
+        return neighbor;
+    };
+    Board.prototype.setBuffer = function (piece) {
+        this.buffer = piece;
+    };
+    Board.prototype.getBuffer = function () {
+        return this.buffer;
+    };
+    Board.prototype.insertInBoard = function (x, y, cell) {
+        var key = "\"" + x + "\"/\"" + y + "\"";
+        this.board[key] = cell;
+    };
+    Board.prototype.getFromBoard = function (x, y) {
+        var key = "\"" + x + "\"/\"" + y + "\"";
+        return this.board[key];
+    };
+    return Board;
+}());
+exports.Board = Board;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Piece
+ */
+var Piece = (function () {
+    function Piece(id, color1, color2, cells) {
+        this.id = id;
+        this.color1 = color1;
+        this.color2 = color2;
+        this.cells = cells;
+    }
+    Piece.prototype.getId = function () {
+        return this.id;
+    };
+    Piece.prototype.setCells = function (cells) {
+        this.cells = cells;
+    };
+    Piece.prototype.getCells = function () {
+        return this.cells;
+    };
+    Piece.prototype.createCells = function () {
+    };
+    return Piece;
+}());
+exports.Piece = Piece;
+
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var $ = __webpack_require__(3);
-var Board_1 = __webpack_require__(1);
-var Player_1 = __webpack_require__(5);
-var Piece_1 = __webpack_require__(2);
+var $ = __webpack_require__(1);
+/**
+ * Player
+ */
+var Player = (function () {
+    function Player(id) {
+        this.scores = {};
+        this.id = id;
+        this.scores["red"] = 0;
+        this.scores["green"] = 0;
+        this.scores["violet"] = 0;
+        this.scores["blue"] = 0;
+        this.scores["yellow"] = 0;
+        this.scores["orange"] = 0;
+    }
+    Player.prototype.showScores = function () {
+        for (var key in this.scores) {
+            var score = this.scores[key];
+            $("span[data-player-id=\"" + this.id + "\"][data-role=\"score\"][data-color=\"" + key + "\"]").text(score);
+        }
+    };
+    Player.prototype.setScore = function (score, color) {
+        this.scores[color] = score;
+    };
+    Player.prototype.getScore = function (color) {
+        return this.scores[color];
+    };
+    return Player;
+}());
+exports.Player = Player;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var $ = __webpack_require__(1);
+var Board_1 = __webpack_require__(2);
+var Player_1 = __webpack_require__(4);
+var Piece_1 = __webpack_require__(3);
 var Cell_1 = __webpack_require__(0);
 var player = new Player_1.Player("1");
 var pieces;
@@ -10578,9 +10617,11 @@ pieces = [
 var board = new Board_1.Board();
 board.initialize();
 var pieceCounter = 1;
-var initialPieces = dealFirstPieces();
+var initialPieces1 = dealFirstPieces();
+var initialPieces2 = dealFirstPieces();
 $(document).ready(function () {
-    placePlayerPieces(initialPieces);
+    placePlayerPieces(initialPieces1, "1");
+    placePlayerPieces(initialPieces2, "2");
     player.showScores();
 });
 function dealPiece() {
@@ -10614,18 +10655,18 @@ function dealFirstPieces() {
     }
     return playerPieces;
 }
-function placePlayerPieces(pieces) {
+function placePlayerPieces(pieces, playerId) {
     pieces.forEach(function (piece) {
-        placePlayerPiece(piece);
+        placePlayerPiece(piece, playerId);
     });
 }
-function placePlayerPiece(piece) {
+function placePlayerPiece(piece, playerId) {
     var images = board.getImages();
     var cells = piece.getCells();
     var leftCell = cells[0];
     var rightCell = cells[1];
     var html = "<ul class=\"piece\" data-role=\"piece\" data-piece-id=\"" + piece.getId() + "\" data-left-color=\"" + leftCell.getColor() + "\" data-right-color=\"" + rightCell.getColor() + "\">\n        <li class=\"hex\">\n            <div class=\"hexIn\">\n                <a href=\"#\" class=\"hexLink\">\n                    <img src=\"" + images[leftCell.getColor()] + "\" alt=\"\">\n                </a>\n            </div>\n        </li>\n        <li class=\"hex\">\n            <div class=\"hexIn\">\n                <a href=\"#\" class=\"hexLink\">\n                    <img src=\"" + images[rightCell.getColor()] + "\" alt=\"\">\n                </a>\n            </div>\n        </li>\n    </ul>";
-    $("#player-1-pieces").append($.parseHTML(html));
+    $("#player-" + playerId + "-pieces").append($.parseHTML(html));
 }
 $(document).on('click', 'img[data-role="board-cell"]', function () {
     var x = $(this).attr('data-coord-x');
@@ -10643,45 +10684,6 @@ $(document).on('click', 'ul[data-role="piece"]', function () {
     var piece = new Piece_1.Piece(pieceId, leftColor, rightColor, [leftCell, rightCell]);
     board.setBuffer(piece);
 });
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var $ = __webpack_require__(3);
-/**
- * Player
- */
-var Player = (function () {
-    function Player(id) {
-        this.scores = {};
-        this.id = id;
-        this.scores["red"] = 0;
-        this.scores["green"] = 0;
-        this.scores["violet"] = 0;
-        this.scores["blue"] = 0;
-        this.scores["yellow"] = 0;
-        this.scores["orange"] = 0;
-    }
-    Player.prototype.showScores = function () {
-        for (var key in this.scores) {
-            var score = this.scores[key];
-            $("span[data-player-id=\"" + this.id + "\"][data-role=\"score\"][data-color=\"" + key + "\"]").text(score);
-        }
-    };
-    Player.prototype.setScore = function (score, color) {
-        this.scores[color] = score;
-    };
-    Player.prototype.getScore = function (color) {
-        return this.scores[color];
-    };
-    return Player;
-}());
-exports.Player = Player;
 
 
 /***/ })

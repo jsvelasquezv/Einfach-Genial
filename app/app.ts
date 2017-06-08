@@ -38,9 +38,11 @@ let board = new Board();
 board.initialize();
 let pieceCounter = 1;
 
-let initialPieces = dealFirstPieces();
+let initialPieces1 = dealFirstPieces();
+let initialPieces2 = dealFirstPieces();
 $(document).ready(function() {
-    placePlayerPieces(initialPieces);
+    placePlayerPieces(initialPieces1, "1");
+    placePlayerPieces(initialPieces2, "2");
 player.showScores();
 
 });
@@ -78,13 +80,13 @@ function dealFirstPieces() {
     return playerPieces;
 }
 
-function placePlayerPieces(pieces) {
+function placePlayerPieces(pieces, playerId) {
     pieces.forEach(piece => {
-        placePlayerPiece(piece);
+        placePlayerPiece(piece, playerId);
     });
 }
 
-function placePlayerPiece(piece: Piece) {
+function placePlayerPiece(piece: Piece, playerId: string) {
     let images = board.getImages();
     let cells = piece.getCells();
     let leftCell = cells[0];
@@ -106,7 +108,7 @@ function placePlayerPiece(piece: Piece) {
             </div>
         </li>
     </ul>`;
-    $("#player-1-pieces").append($.parseHTML(html));
+    $(`#player-${playerId}-pieces`).append($.parseHTML(html));
 }
 
 $(document).on('click', 'img[data-role="board-cell"]', function() {
