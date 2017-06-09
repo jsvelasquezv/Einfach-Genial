@@ -10516,11 +10516,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Piece
  */
 var Piece = (function () {
-    function Piece(id, color1, color2, cells) {
+    function Piece(id, color1, color2, cells, player) {
         this.id = id;
         this.color1 = color1;
         this.color2 = color2;
         this.cells = cells;
+        this.player = player;
     }
     Piece.prototype.getId = function () {
         return this.id;
@@ -10572,6 +10573,12 @@ var Player = (function () {
     Player.prototype.getScore = function (color) {
         return this.scores[color];
     };
+    Player.prototype.setId = function (id) {
+        this.id = id;
+    };
+    Player.prototype.getId = function () {
+        return this.id;
+    };
     return Player;
 }());
 exports.Player = Player;
@@ -10589,7 +10596,6 @@ var Board_1 = __webpack_require__(2);
 var Player_1 = __webpack_require__(4);
 var Piece_1 = __webpack_require__(3);
 var Cell_1 = __webpack_require__(0);
-var player = new Player_1.Player("1");
 var pieces;
 pieces = [
     { 'leftColor': 'red', 'rightColor': 'red', 'quantity': 5 },
@@ -10616,42 +10622,45 @@ pieces = [
 ];
 var board = new Board_1.Board();
 board.initialize();
+var player1 = new Player_1.Player("1");
+var player2 = new Player_1.Player("2");
 var pieceCounter = 1;
-var initialPieces1 = dealFirstPieces();
-var initialPieces2 = dealFirstPieces();
+var initialPieces1 = dealFirstPieces(player1.getId());
+var initialPieces2 = dealFirstPieces(player2.getId());
 $(document).ready(function () {
     placePlayerPieces(initialPieces1, "1");
     placePlayerPieces(initialPieces2, "2");
-    player.showScores();
+    player1.showScores();
+    player2.showScores();
 });
-function dealPiece() {
+function dealPiece(playerId) {
     var index = Math.floor(Math.random() * pieces.length);
     var pieceData = pieces[index];
     var piece;
     if (pieceData['quantity'] == 1) {
-        piece = buildPiece(pieceData);
+        piece = buildPiece(pieceData, playerId);
         pieces.slice(index, 1);
     }
     else {
-        piece = buildPiece(pieceData);
+        piece = buildPiece(pieceData, playerId);
         pieces[index]['quantity']--;
     }
     return piece;
 }
-function buildPiece(pieceData) {
+function buildPiece(pieceData, playerId) {
     var pieceId = pieceCounter;
     var leftColor = pieceData['leftColor'];
     var rightColor = pieceData['rightColor'];
     var leftCell = new Cell_1.Cell(pieceId, 'left', leftColor, 0, 0, "1");
     var rightCell = new Cell_1.Cell(pieceId, 'right', rightColor, 0, 0, "1");
-    var piece = new Piece_1.Piece(pieceId, leftColor, rightColor, [leftCell, rightCell]);
+    var piece = new Piece_1.Piece(pieceId, leftColor, rightColor, [leftCell, rightCell], playerId);
     pieceCounter++;
     return piece;
 }
-function dealFirstPieces() {
+function dealFirstPieces(playerId) {
     var playerPieces = [];
     for (var index = 0; index < 6; index++) {
-        playerPieces.push(dealPiece());
+        playerPieces.push(dealPiece(playerId));
     }
     return playerPieces;
 }
@@ -10665,8 +10674,13 @@ function placePlayerPiece(piece, playerId) {
     var cells = piece.getCells();
     var leftCell = cells[0];
     var rightCell = cells[1];
-    var html = "<ul class=\"piece\" data-role=\"piece\" data-piece-id=\"" + piece.getId() + "\" data-left-color=\"" + leftCell.getColor() + "\" data-right-color=\"" + rightCell.getColor() + "\">\n        <li class=\"hex\">\n            <div class=\"hexIn\">\n                <a href=\"#\" class=\"hexLink\">\n                    <img src=\"" + images[leftCell.getColor()] + "\" alt=\"\">\n                </a>\n            </div>\n        </li>\n        <li class=\"hex\">\n            <div class=\"hexIn\">\n                <a href=\"#\" class=\"hexLink\">\n                    <img src=\"" + images[rightCell.getColor()] + "\" alt=\"\">\n                </a>\n            </div>\n        </li>\n    </ul>";
+    var html = "<ul class=\"piece\" data-role=\"piece\" data-piece-id=\"" + piece.getId() + "\" data-player-id=\"" + playerId + "\" data-left-color=\"" + leftCell.getColor() + "\" data-right-color=\"" + rightCell.getColor() + "\">\n        <li class=\"hex\">\n            <div class=\"hexIn\">\n                <a href=\"#\" class=\"hexLink\">\n                    <img src=\"" + images[leftCell.getColor()] + "\" alt=\"\">\n                </a>\n            </div>\n        </li>\n        <li class=\"hex\">\n            <div class=\"hexIn\">\n                <a href=\"#\" class=\"hexLink\">\n                    <img src=\"" + images[rightCell.getColor()] + "\" alt=\"\">\n                </a>\n            </div>\n        </li>\n    </ul>";
     $("#player-" + playerId + "-pieces").append($.parseHTML(html));
+}
+function replacePlayerPlace(toReplaceId, playerId) {
+    var piece = dealPiece(playerId);
+    $("ul[data-role=\"piece\"][data-piece-id=\"" + toReplaceId + "\"][data-player-id=\"" + playerId + "\"]").remove();
+    placePlayerPiece(piece, playerId);
 }
 $(document).on('click', 'img[data-role="board-cell"]', function () {
     var x = $(this).attr('data-coord-x');
@@ -10675,14 +10689,25 @@ $(document).on('click', 'img[data-role="board-cell"]', function () {
         board.drawPiece(Number(x), Number(y), board.getBuffer(), $(this));
     }
 });
-$(document).on('click', 'ul[data-role="piece"]', function () {
+$(document).on('click', "ul[data-role=\"piece\"][data-player-id=\"" + player1.getId() + "\"]", function () {
     var pieceId = Number($(this).attr('data-piece-id'));
     var leftColor = $(this).attr('data-left-color');
     var rightColor = $(this).attr('data-right-color');
-    var leftCell = new Cell_1.Cell(pieceId, 'left', leftColor, 0, 0, "1");
-    var rightCell = new Cell_1.Cell(pieceId, 'right', rightColor, 0, 0, "1");
-    var piece = new Piece_1.Piece(pieceId, leftColor, rightColor, [leftCell, rightCell]);
+    var leftCell = new Cell_1.Cell(pieceId, 'left', leftColor, 0, 0, player1.getId());
+    var rightCell = new Cell_1.Cell(pieceId, 'right', rightColor, 0, 0, player1.getId());
+    var piece = new Piece_1.Piece(pieceId, leftColor, rightColor, [leftCell, rightCell], player1.getId());
     board.setBuffer(piece);
+    replacePlayerPlace(piece.getId(), player1.getId());
+});
+$(document).on('click', "ul[data-role=\"piece\"][data-player-id=\"" + player2.getId() + "\"]", function () {
+    var pieceId = Number($(this).attr('data-piece-id'));
+    var leftColor = $(this).attr('data-left-color');
+    var rightColor = $(this).attr('data-right-color');
+    var leftCell = new Cell_1.Cell(pieceId, 'left', leftColor, 0, 0, player2.getId());
+    var rightCell = new Cell_1.Cell(pieceId, 'right', rightColor, 0, 0, player2.getId());
+    var piece = new Piece_1.Piece(pieceId, leftColor, rightColor, [leftCell, rightCell], player2.getId());
+    board.setBuffer(piece);
+    replacePlayerPlace(piece.getId(), player2.getId());
 });
 
 

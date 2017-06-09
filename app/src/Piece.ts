@@ -11,11 +11,12 @@ class Piece {
     private player: string;
     private cells: Array<Cell>;
     
-    constructor(id: number, color1: string, color2: string, cells: Array<Cell>) {
+    constructor(id: number, color1: string, color2: string, cells: Array<Cell>, player: string) {
         this.id = id;
         this.color1 = color1;
         this.color2 = color2;
         this.cells = cells;
+        this.player = player;
     }
 
     public getId(): number {

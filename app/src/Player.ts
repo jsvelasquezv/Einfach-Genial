@@ -31,6 +31,14 @@ class Player {
     public getScore(color: string) {
         return this.scores[color];
     }
+
+    public setId(id: string) {
+        this.id = id;
+    }
+
+    public getId() {
+        return this.id;
+    }
 }
 
 export { Player }
