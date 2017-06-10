@@ -69,15 +69,16 @@ class Board {
 
     public drawCell(x: number, y:number, cell: Cell, domElement): boolean {
         let drawn = false;
-        if(this.canPlace(x, y, cell)) {
+        // if(this.canPlace(x, y, cell)) {
             let tempCell = cell;
             tempCell.setCoords(x, y);
             this.insertInBoard(x, y, tempCell);
             domElement.attr('src', this.images[cell.getColor()]);
             domElement.attr('data-piece-id', cell.getPieceId());
             domElement.attr('data-color', cell.getColor());
+            console.log(tempCell);
             drawn = true;
-        }
+        // }
         return drawn;
     }
 
@@ -88,15 +89,72 @@ class Board {
             for(let key in this.directions) {
                 let direction = this.directions[key];
                 let neighborCell = this.getFromBoard(x + direction[0], y + direction[1]);
-                if(neighborCell.getPieceId() == cell.getPieceId() && endCell.getPieceId() == 0) {
-                    canPlace = true;
-                    break;
+                if(neighborCell != undefined) {
+                    if(neighborCell.getPieceId() == cell.getPieceId() && endCell.getPieceId() == 0) {
+                        canPlace = true;
+                        break;
+                    }
                 }
             }
         } else if(cell.getType() == 'left' && endCell.getPieceId() == 0) {
             canPlace = true;
         }
         return canPlace;
+    }
+
+    public getAllMoves(piece: Piece) {
+        let cells = piece.getCells();
+        let leftCell = cells[0];
+        let rightCell = cells[1];
+        // console.log(leftCell,rightCell);
+        let moves = [];
+        let initialBoard = this.board;
+        for (let key in this.board) {
+            let boardCell = this.board[key];
+            let coordX = boardCell.getCoordX();
+            let coordY = boardCell.getCoordY();
+            if(this.canPlace(coordX, coordY, leftCell)) {
+                let neighborCells = this.getEmptyNeighborCells(coordX, coordY);
+                let moveLeftCell = [coordX, coordY, leftCell];
+                if(neighborCells.length > 0) {
+                    neighborCells.forEach(cell => {
+                        let moveRightCell = [cell.getCoordX(), cell.getCoordY(), rightCell];
+                        this.insertInBoard(coordX, coordY, leftCell);
+                        this.insertInBoard(cell.getCoordX(), cell.getCoordY(), leftCell);
+                        let leftScore = this.calculateCellScore(coordX, coordY);
+                        let rightScore = this.calculateCellScore(cell.getCoordX(), cell.getCoordY());
+                        this.initialize();
+                        let move = [moveLeftCell, moveRightCell, (leftScore['score'] + rightScore['score']-1)];
+                        moves.push(move);
+                    });
+                }
+            }
+
+        }
+        return moves;
+    }
+
+    public getBestMove(pieces) {
+        let bestMoves = [];
+        pieces.forEach(piece => {
+            let pieceMoves = this.getAllMoves(piece);
+            let bestPieceMove = this.getHighestByProp(pieceMoves, 2);
+            bestMoves.push(bestPieceMove);
+        });
+        let bestMove = this.getHighestByProp(bestMoves, 2);
+        return bestMove;
+    }
+
+    public getEmptyNeighborCells(x: number, y: number) {
+        let neighbors = [];
+        for (let key in this.directions) {
+            let direction = this.directions[key];
+            let cell = this.getFromBoard(x + direction[0], y + direction[1]);
+            if(cell != undefined && cell.getPieceId() == 0) {
+                neighbors.push(cell);
+            }
+        }
+        return neighbors;
     }
 
     public calculateCellScore(x: number, y: number): object {
@@ -117,8 +175,6 @@ class Board {
             let direction = this.directions[key];
             neighborCell = this.getFromBoard(sumX + direction[0], sumY + direction[1]);
             while (neighborCell != undefined && neighborCell != null && neighborCell.getPieceId() != 0) {
-                // console.log(cell.getColor(), neighborCell.getColor());
-                // console.log(neighborCell);
                 if (neighborCell.getColor() == cell.getColor()) {
                     directionScores[key] = directionScores[key] + 1;
                     sumX = sumX + direction[0];
@@ -167,6 +223,18 @@ class Board {
     private getFromBoard(x: number, y:number): Cell {
         let key = `"${x}"/"${y}"`;
         return this.board[key];
+    }
+
+    private getHighestByProp(array, prop) {
+        let highest = 0;
+        let object = null;
+        array.forEach(element => {
+            if(element[prop] > highest) {
+                highest = element[prop];
+                object = element;
+            }
+        });
+       return object;
     }
 }
 

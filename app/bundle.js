@@ -10448,15 +10448,16 @@ var Board = (function () {
     };
     Board.prototype.drawCell = function (x, y, cell, domElement) {
         var drawn = false;
-        if (this.canPlace(x, y, cell)) {
-            var tempCell = cell;
-            tempCell.setCoords(x, y);
-            this.insertInBoard(x, y, tempCell);
-            domElement.attr('src', this.images[cell.getColor()]);
-            domElement.attr('data-piece-id', cell.getPieceId());
-            domElement.attr('data-color', cell.getColor());
-            drawn = true;
-        }
+        // if(this.canPlace(x, y, cell)) {
+        var tempCell = cell;
+        tempCell.setCoords(x, y);
+        this.insertInBoard(x, y, tempCell);
+        domElement.attr('src', this.images[cell.getColor()]);
+        domElement.attr('data-piece-id', cell.getPieceId());
+        domElement.attr('data-color', cell.getColor());
+        console.log(tempCell);
+        drawn = true;
+        // }
         return drawn;
     };
     Board.prototype.canPlace = function (x, y, cell) {
@@ -10466,9 +10467,11 @@ var Board = (function () {
             for (var key in this.directions) {
                 var direction = this.directions[key];
                 var neighborCell = this.getFromBoard(x + direction[0], y + direction[1]);
-                if (neighborCell.getPieceId() == cell.getPieceId() && endCell.getPieceId() == 0) {
-                    canPlace = true;
-                    break;
+                if (neighborCell != undefined) {
+                    if (neighborCell.getPieceId() == cell.getPieceId() && endCell.getPieceId() == 0) {
+                        canPlace = true;
+                        break;
+                    }
                 }
             }
         }
@@ -10476,6 +10479,63 @@ var Board = (function () {
             canPlace = true;
         }
         return canPlace;
+    };
+    Board.prototype.getAllMoves = function (piece) {
+        var _this = this;
+        var cells = piece.getCells();
+        var leftCell = cells[0];
+        var rightCell = cells[1];
+        // console.log(leftCell,rightCell);
+        var moves = [];
+        var initialBoard = this.board;
+        var _loop_1 = function (key) {
+            var boardCell = this_1.board[key];
+            var coordX = boardCell.getCoordX();
+            var coordY = boardCell.getCoordY();
+            if (this_1.canPlace(coordX, coordY, leftCell)) {
+                var neighborCells = this_1.getEmptyNeighborCells(coordX, coordY);
+                var moveLeftCell_1 = [coordX, coordY, leftCell];
+                if (neighborCells.length > 0) {
+                    neighborCells.forEach(function (cell) {
+                        var moveRightCell = [cell.getCoordX(), cell.getCoordY(), rightCell];
+                        _this.insertInBoard(coordX, coordY, leftCell);
+                        _this.insertInBoard(cell.getCoordX(), cell.getCoordY(), leftCell);
+                        var leftScore = _this.calculateCellScore(coordX, coordY);
+                        var rightScore = _this.calculateCellScore(cell.getCoordX(), cell.getCoordY());
+                        _this.initialize();
+                        var move = [moveLeftCell_1, moveRightCell, (leftScore['score'] + rightScore['score'] - 1)];
+                        moves.push(move);
+                    });
+                }
+            }
+        };
+        var this_1 = this;
+        for (var key in this.board) {
+            _loop_1(key);
+        }
+        return moves;
+    };
+    Board.prototype.getBestMove = function (pieces) {
+        var _this = this;
+        var bestMoves = [];
+        pieces.forEach(function (piece) {
+            var pieceMoves = _this.getAllMoves(piece);
+            var bestPieceMove = _this.getHighestByProp(pieceMoves, 2);
+            bestMoves.push(bestPieceMove);
+        });
+        var bestMove = this.getHighestByProp(bestMoves, 2);
+        return bestMove;
+    };
+    Board.prototype.getEmptyNeighborCells = function (x, y) {
+        var neighbors = [];
+        for (var key in this.directions) {
+            var direction = this.directions[key];
+            var cell = this.getFromBoard(x + direction[0], y + direction[1]);
+            if (cell != undefined && cell.getPieceId() == 0) {
+                neighbors.push(cell);
+            }
+        }
+        return neighbors;
     };
     Board.prototype.calculateCellScore = function (x, y) {
         var totalScore = 0;
@@ -10495,8 +10555,6 @@ var Board = (function () {
             var direction = this.directions[key];
             neighborCell = this.getFromBoard(sumX + direction[0], sumY + direction[1]);
             while (neighborCell != undefined && neighborCell != null && neighborCell.getPieceId() != 0) {
-                // console.log(cell.getColor(), neighborCell.getColor());
-                // console.log(neighborCell);
                 if (neighborCell.getColor() == cell.getColor()) {
                     directionScores[key] = directionScores[key] + 1;
                     sumX = sumX + direction[0];
@@ -10541,6 +10599,17 @@ var Board = (function () {
     Board.prototype.getFromBoard = function (x, y) {
         var key = "\"" + x + "\"/\"" + y + "\"";
         return this.board[key];
+    };
+    Board.prototype.getHighestByProp = function (array, prop) {
+        var highest = 0;
+        var object = null;
+        array.forEach(function (element) {
+            if (element[prop] > highest) {
+                highest = element[prop];
+                object = element;
+            }
+        });
+        return object;
     };
     return Board;
 }());
@@ -10674,12 +10743,55 @@ var pieceCounter = 1;
 var turno = player1.getId();
 var initialPieces1 = dealFirstPieces(player1.getId());
 var initialPieces2 = dealFirstPieces(player2.getId());
+var clicks = 0;
 $(document).ready(function () {
     placePlayerPieces(initialPieces1, "1");
     placePlayerPieces(initialPieces2, "2");
     player1.showScores();
     player2.showScores();
 });
+$(document).keypress(function (event) {
+    if (event.which == 13) {
+        // let moves = board.getAllMoves(initialPieces2[0]);
+        // console.log(moves);
+        var move = board.getBestMove(initialPieces2);
+        var left = move[0];
+        var leftX = left[0];
+        var leftY = left[1];
+        var leftCell = left[2];
+        var leftDomElement = $("img[data-role=\"board-cell\"][data-coord-x=\"" + leftX + "\"][data-coord-y=\"" + leftY + "\"]");
+        board.drawCell(leftX, leftY, leftCell, leftDomElement);
+        var right = move[1];
+        var rightX = right[0];
+        var rightY = right[1];
+        var rightCell = right[2];
+        var rightDomElement = $("img[data-role=\"board-cell\"][data-coord-x=\"" + rightX + "\"][data-coord-y=\"" + rightY + "\"]");
+        board.drawCell(rightX, rightY, leftCell, rightDomElement);
+        // console.log(Math.max.apply(Math,moves.map(function(o){return o[2];})));
+    }
+    ;
+});
+function juegaPc() {
+    var move = board.getBestMove(initialPieces2);
+    var left = move[0];
+    var leftX = left[0];
+    var leftY = left[1];
+    var leftCell = left[2];
+    var leftDomElement = $("img[data-role=\"board-cell\"][data-coord-x=\"" + leftX + "\"][data-coord-y=\"" + leftY + "\"]");
+    board.drawCell(leftX, leftY, leftCell, leftDomElement);
+    var score = board.calculateCellScore(Number(leftX), Number(leftY));
+    updatePlayerScore(turno, score['color'], score['score']);
+    var right = move[1];
+    var rightX = right[0];
+    var rightY = right[1];
+    var rightCell = right[2];
+    var rightDomElement = $("img[data-role=\"board-cell\"][data-coord-x=\"" + rightX + "\"][data-coord-y=\"" + rightY + "\"]");
+    board.drawCell(rightX, rightY, leftCell, rightDomElement);
+    turno = player2.getId();
+    score = board.calculateCellScore(Number(rightX), Number(rightY));
+    updatePlayerScore(turno, score['color'], score['score']);
+    replacePlayerPlace(leftCell.getPieceId(), player2.getId());
+}
 function dealPiece(playerId) {
     var index = Math.floor(Math.random() * pieces.length);
     var pieceData = pieces[index];
@@ -10745,6 +10857,10 @@ $(document).on('click', 'img[data-role="board-cell"]', function () {
         var score = board.calculateCellScore(Number(x), Number(y));
         updatePlayerScore(turno, score['color'], score['score']);
     }
+    clicks++;
+    if (clicks == 2) {
+        juegaPc();
+    }
 });
 $(document).on('click', "ul[data-role=\"piece\"][data-player-id=\"" + player1.getId() + "\"]", function () {
     var pieceId = Number($(this).attr('data-piece-id'));
@@ -10756,6 +10872,7 @@ $(document).on('click', "ul[data-role=\"piece\"][data-player-id=\"" + player1.ge
     board.setBuffer(piece);
     replacePlayerPlace(piece.getId(), player1.getId());
     turno = player1.getId();
+    clicks = 0;
 });
 $(document).on('click', "ul[data-role=\"piece\"][data-player-id=\"" + player2.getId() + "\"]", function () {
     var pieceId = Number($(this).attr('data-piece-id'));
@@ -10768,10 +10885,29 @@ $(document).on('click', "ul[data-role=\"piece\"][data-player-id=\"" + player2.ge
     replacePlayerPlace(piece.getId(), player2.getId());
     turno = player2.getId();
 });
-function minimax() {
-    var moves = [];
-    return moves;
-}
+// let minimax = function (depth, game, isMaximisingPlayer) {
+//     if (depth === 0) {
+//         return -evaluateBoard(game.board());
+//     }
+//     var newGameMoves = game.ugly_moves();
+//     if (isMaximisingPlayer) {
+//         var bestMove = -9999;
+//         for (var i = 0; i < newGameMoves.length; i++) {
+//             game.ugly_move(newGameMoves[i]);
+//             bestMove = Math.max(bestMove, minimax(depth - 1, game, !isMaximisingPlayer));
+//             game.undo();
+//         }
+//         return bestMove;
+//     } else {
+//         var bestMove = 9999;
+//         for (var i = 0; i < newGameMoves.length; i++) {
+//             game.ugly_move(newGameMoves[i]);
+//             bestMove = Math.min(bestMove, minimax(depth - 1, game, !isMaximisingPlayer));
+//             game.undo();
+//         }
+//         return bestMove;
+//     }
+// }; 
 
 
 /***/ })

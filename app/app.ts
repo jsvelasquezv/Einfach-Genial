@@ -37,15 +37,58 @@ let player1 = new Player("1");
 let player2 = new Player("2");
 let pieceCounter = 1;
 let turno = player1.getId();
-
 let initialPieces1 = dealFirstPieces(player1.getId());
 let initialPieces2 = dealFirstPieces(player2.getId());
+let clicks = 0;
 $(document).ready(function() {
     placePlayerPieces(initialPieces1, "1");
     placePlayerPieces(initialPieces2, "2");
     player1.showScores();
     player2.showScores();
 });
+
+$(document).keypress(function(event) {
+    if (event.which == 13) {
+        // let moves = board.getAllMoves(initialPieces2[0]);
+        // console.log(moves);
+        let move = board.getBestMove(initialPieces2);
+        let left = move[0];
+        let leftX = left[0];
+        let leftY = left[1];
+        let leftCell = left[2];
+        let leftDomElement = $(`img[data-role="board-cell"][data-coord-x="${leftX}"][data-coord-y="${leftY}"]`);
+        board.drawCell(leftX, leftY, leftCell, leftDomElement);
+        let right = move[1];
+        let rightX = right[0];
+        let rightY = right[1];
+        let rightCell = right[2];
+        let rightDomElement = $(`img[data-role="board-cell"][data-coord-x="${rightX}"][data-coord-y="${rightY}"]`);
+        board.drawCell(rightX, rightY, leftCell, rightDomElement);
+        // console.log(Math.max.apply(Math,moves.map(function(o){return o[2];})));
+    };
+}) ;
+
+function juegaPc() {
+    let move = board.getBestMove(initialPieces2);
+    let left = move[0];
+    let leftX = left[0];
+    let leftY = left[1];
+    let leftCell = left[2];
+    let leftDomElement = $(`img[data-role="board-cell"][data-coord-x="${leftX}"][data-coord-y="${leftY}"]`);
+    board.drawCell(leftX, leftY, leftCell, leftDomElement);
+    let score = board.calculateCellScore(Number(leftX), Number(leftY));
+    updatePlayerScore(turno, score['color'], score['score']);
+    let right = move[1];
+    let rightX = right[0];
+    let rightY = right[1];
+    let rightCell = right[2];
+    let rightDomElement = $(`img[data-role="board-cell"][data-coord-x="${rightX}"][data-coord-y="${rightY}"]`);
+    board.drawCell(rightX, rightY, leftCell, rightDomElement);
+    turno = player2.getId();
+    score = board.calculateCellScore(Number(rightX), Number(rightY));
+    updatePlayerScore(turno, score['color'], score['score']);
+    replacePlayerPlace(leftCell.getPieceId(), player2.getId());
+}
 
 function dealPiece(playerId: string): Piece {
     let index = Math.floor(Math.random() * pieces.length);
@@ -135,6 +178,10 @@ $(document).on('click', 'img[data-role="board-cell"]', function() {
         let score = board.calculateCellScore(Number(x), Number(y));
         updatePlayerScore(turno, score['color'], score['score']);
     }
+    clicks ++;
+    if(clicks == 2) {
+        juegaPc();    
+    }
 });
 
 $(document).on('click', `ul[data-role="piece"][data-player-id="${player1.getId()}"]`, function() {
@@ -147,6 +194,7 @@ $(document).on('click', `ul[data-role="piece"][data-player-id="${player1.getId()
     board.setBuffer(piece);
     replacePlayerPlace(piece.getId(), player1.getId());
     turno = player1.getId();
+    clicks = 0;
 })
 
 $(document).on('click', `ul[data-role="piece"][data-player-id="${player2.getId()}"]`, function() {
@@ -161,7 +209,26 @@ $(document).on('click', `ul[data-role="piece"][data-player-id="${player2.getId()
     turno = player2.getId();
 })
 
-function minimax() {
-    let moves = [];
-    return moves;
-}
+// let minimax = function (depth, game, isMaximisingPlayer) {
+//     if (depth === 0) {
+//         return -evaluateBoard(game.board());
+//     }
+//     var newGameMoves = game.ugly_moves();
+//     if (isMaximisingPlayer) {
+//         var bestMove = -9999;
+//         for (var i = 0; i < newGameMoves.length; i++) {
+//             game.ugly_move(newGameMoves[i]);
+//             bestMove = Math.max(bestMove, minimax(depth - 1, game, !isMaximisingPlayer));
+//             game.undo();
+//         }
+//         return bestMove;
+//     } else {
+//         var bestMove = 9999;
+//         for (var i = 0; i < newGameMoves.length; i++) {
+//             game.ugly_move(newGameMoves[i]);
+//             bestMove = Math.min(bestMove, minimax(depth - 1, game, !isMaximisingPlayer));
+//             game.undo();
+//         }
+//         return bestMove;
+//     }
+// };
