@@ -36,8 +36,8 @@ class Board {
                 this.insertInBoard(j, i, emptyCell);
             }
         }
-        for(let i = base; i > 0; i--) {
-            for(let j = -(i - base); j >= -base; j--) {
+        for(let i = 1; i <= base; i ++) {
+            for(let j = -base; j <= (base - i); j++) {
                 emptyCell = new Cell(0, '', '', j, i, '');
                 this.insertInBoard(j, i, emptyCell);
             }
@@ -97,6 +97,48 @@ class Board {
             canPlace = true;
         }
         return canPlace;
+    }
+
+    public calculateCellScore(x: number, y: number): object {
+        let totalScore = 0;
+        let directionScores = {
+            'NO': 0,
+            'O': 0,
+            'SO': 0,
+            'NE': 0,
+            'E': 0,
+            'SE': 0,
+        }
+        let cell = this.getFromBoard(x, y);
+        let sumX = x;
+        let sumY = y;
+        let neighborCell = null;
+        for(let key in this.directions) {
+            let direction = this.directions[key];
+            neighborCell = this.getFromBoard(sumX + direction[0], sumY + direction[1]);
+            while (neighborCell != undefined && neighborCell != null && neighborCell.getPieceId() != 0) {
+                // console.log(cell.getColor(), neighborCell.getColor());
+                // console.log(neighborCell);
+                if (neighborCell.getColor() == cell.getColor()) {
+                    directionScores[key] = directionScores[key] + 1;
+                    sumX = sumX + direction[0];
+                    sumY = sumY + direction[1];
+                    neighborCell = this.getFromBoard(sumX, sumY);
+                } else {
+                    break;
+                }
+            }
+            sumX = x;
+            sumY = y;
+        }
+        for(let key in directionScores) {
+            let directionScore = directionScores[key];
+            if (directionScore > 0) {
+                totalScore += (directionScore - 1);
+            }
+        }
+        // console.log(totalScore);
+        return {'score': totalScore, 'color': cell.getColor()};
     }
 
     public neighbor(direction: string, piece: Array<number>): boolean {

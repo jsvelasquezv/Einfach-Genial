@@ -10419,8 +10419,8 @@ var Board = (function () {
                 this.insertInBoard(j, i, emptyCell);
             }
         }
-        for (var i = base; i > 0; i--) {
-            for (var j = -(i - base); j >= -base; j--) {
+        for (var i = 1; i <= base; i++) {
+            for (var j = -base; j <= (base - i); j++) {
                 emptyCell = new Cell_1.Cell(0, '', '', j, i, '');
                 this.insertInBoard(j, i, emptyCell);
             }
@@ -10476,6 +10476,48 @@ var Board = (function () {
             canPlace = true;
         }
         return canPlace;
+    };
+    Board.prototype.calculateCellScore = function (x, y) {
+        var totalScore = 0;
+        var directionScores = {
+            'NO': 0,
+            'O': 0,
+            'SO': 0,
+            'NE': 0,
+            'E': 0,
+            'SE': 0,
+        };
+        var cell = this.getFromBoard(x, y);
+        var sumX = x;
+        var sumY = y;
+        var neighborCell = null;
+        for (var key in this.directions) {
+            var direction = this.directions[key];
+            neighborCell = this.getFromBoard(sumX + direction[0], sumY + direction[1]);
+            while (neighborCell != undefined && neighborCell != null && neighborCell.getPieceId() != 0) {
+                // console.log(cell.getColor(), neighborCell.getColor());
+                // console.log(neighborCell);
+                if (neighborCell.getColor() == cell.getColor()) {
+                    directionScores[key] = directionScores[key] + 1;
+                    sumX = sumX + direction[0];
+                    sumY = sumY + direction[1];
+                    neighborCell = this.getFromBoard(sumX, sumY);
+                }
+                else {
+                    break;
+                }
+            }
+            sumX = x;
+            sumY = y;
+        }
+        for (var key in directionScores) {
+            var directionScore = directionScores[key];
+            if (directionScore > 0) {
+                totalScore += (directionScore - 1);
+            }
+        }
+        // console.log(totalScore);
+        return { 'score': totalScore, 'color': cell.getColor() };
     };
     Board.prototype.neighbor = function (direction, piece) {
         var neighbor = false;
@@ -10573,6 +10615,10 @@ var Player = (function () {
     Player.prototype.getScore = function (color) {
         return this.scores[color];
     };
+    Player.prototype.updateScore = function (score, color) {
+        var playerScore = this.scores[color] += score;
+        $("span[data-player-id=\"" + this.id + "\"][data-role=\"score\"][data-color=\"" + color + "\"]").text(playerScore);
+    };
     Player.prototype.setId = function (id) {
         this.id = id;
     };
@@ -10625,6 +10671,7 @@ board.initialize();
 var player1 = new Player_1.Player("1");
 var player2 = new Player_1.Player("2");
 var pieceCounter = 1;
+var turno = player1.getId();
 var initialPieces1 = dealFirstPieces(player1.getId());
 var initialPieces2 = dealFirstPieces(player2.getId());
 $(document).ready(function () {
@@ -10677,6 +10724,14 @@ function placePlayerPiece(piece, playerId) {
     var html = "<ul class=\"piece\" data-role=\"piece\" data-piece-id=\"" + piece.getId() + "\" data-player-id=\"" + playerId + "\" data-left-color=\"" + leftCell.getColor() + "\" data-right-color=\"" + rightCell.getColor() + "\">\n        <li class=\"hex\">\n            <div class=\"hexIn\">\n                <a href=\"#\" class=\"hexLink\">\n                    <img src=\"" + images[leftCell.getColor()] + "\" alt=\"\">\n                </a>\n            </div>\n        </li>\n        <li class=\"hex\">\n            <div class=\"hexIn\">\n                <a href=\"#\" class=\"hexLink\">\n                    <img src=\"" + images[rightCell.getColor()] + "\" alt=\"\">\n                </a>\n            </div>\n        </li>\n    </ul>";
     $("#player-" + playerId + "-pieces").append($.parseHTML(html));
 }
+function updatePlayerScore(playerId, color, score) {
+    if (player1.getId() == playerId) {
+        player1.updateScore(score, color);
+    }
+    if (player2.getId() == playerId) {
+        player2.updateScore(score, color);
+    }
+}
 function replacePlayerPlace(toReplaceId, playerId) {
     var piece = dealPiece(playerId);
     $("ul[data-role=\"piece\"][data-piece-id=\"" + toReplaceId + "\"][data-player-id=\"" + playerId + "\"]").remove();
@@ -10687,6 +10742,8 @@ $(document).on('click', 'img[data-role="board-cell"]', function () {
     var y = $(this).attr('data-coord-y');
     if (board.getBuffer() != null) {
         board.drawPiece(Number(x), Number(y), board.getBuffer(), $(this));
+        var score = board.calculateCellScore(Number(x), Number(y));
+        updatePlayerScore(turno, score['color'], score['score']);
     }
 });
 $(document).on('click', "ul[data-role=\"piece\"][data-player-id=\"" + player1.getId() + "\"]", function () {
@@ -10698,6 +10755,7 @@ $(document).on('click', "ul[data-role=\"piece\"][data-player-id=\"" + player1.ge
     var piece = new Piece_1.Piece(pieceId, leftColor, rightColor, [leftCell, rightCell], player1.getId());
     board.setBuffer(piece);
     replacePlayerPlace(piece.getId(), player1.getId());
+    turno = player1.getId();
 });
 $(document).on('click', "ul[data-role=\"piece\"][data-player-id=\"" + player2.getId() + "\"]", function () {
     var pieceId = Number($(this).attr('data-piece-id'));
@@ -10708,7 +10766,12 @@ $(document).on('click', "ul[data-role=\"piece\"][data-player-id=\"" + player2.ge
     var piece = new Piece_1.Piece(pieceId, leftColor, rightColor, [leftCell, rightCell], player2.getId());
     board.setBuffer(piece);
     replacePlayerPlace(piece.getId(), player2.getId());
+    turno = player2.getId();
 });
+function minimax() {
+    var moves = [];
+    return moves;
+}
 
 
 /***/ })

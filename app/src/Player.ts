@@ -32,6 +32,11 @@ class Player {
         return this.scores[color];
     }
 
+    public updateScore(score: number, color: string) {
+        let playerScore = this.scores[color] += score;
+        $(`span[data-player-id="${this.id}"][data-role="score"][data-color="${color}"]`).text(playerScore);        
+    }
+
     public setId(id: string) {
         this.id = id;
     }

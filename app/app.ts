@@ -36,6 +36,7 @@ board.initialize();
 let player1 = new Player("1");
 let player2 = new Player("2");
 let pieceCounter = 1;
+let turno = player1.getId();
 
 let initialPieces1 = dealFirstPieces(player1.getId());
 let initialPieces2 = dealFirstPieces(player2.getId());
@@ -110,6 +111,16 @@ function placePlayerPiece(piece: Piece, playerId: string) {
     $(`#player-${playerId}-pieces`).append($.parseHTML(html));
 }
 
+function updatePlayerScore(playerId: string, color: string, score: number) {
+    if(player1.getId() == playerId) {
+        player1.updateScore(score, color);
+    }
+
+    if(player2.getId() == playerId) {
+        player2.updateScore(score, color);
+    }
+}
+
 function replacePlayerPlace(toReplaceId: number, playerId: string) {
     let piece = dealPiece(playerId);
     $(`ul[data-role="piece"][data-piece-id="${toReplaceId}"][data-player-id="${playerId}"]`).remove();
@@ -121,6 +132,8 @@ $(document).on('click', 'img[data-role="board-cell"]', function() {
     let y = $(this).attr('data-coord-y');
     if(board.getBuffer() != null) {
         board.drawPiece(Number(x), Number(y), board.getBuffer(), $(this));
+        let score = board.calculateCellScore(Number(x), Number(y));
+        updatePlayerScore(turno, score['color'], score['score']);
     }
 });
 
@@ -133,6 +146,7 @@ $(document).on('click', `ul[data-role="piece"][data-player-id="${player1.getId()
     let piece = new Piece(pieceId, leftColor, rightColor, [leftCell, rightCell], player1.getId());
     board.setBuffer(piece);
     replacePlayerPlace(piece.getId(), player1.getId());
+    turno = player1.getId();
 })
 
 $(document).on('click', `ul[data-role="piece"][data-player-id="${player2.getId()}"]`, function() {
@@ -144,4 +158,10 @@ $(document).on('click', `ul[data-role="piece"][data-player-id="${player2.getId()
     let piece = new Piece(pieceId, leftColor, rightColor, [leftCell, rightCell], player2.getId());
     board.setBuffer(piece);
     replacePlayerPlace(piece.getId(), player2.getId());
+    turno = player2.getId();
 })
+
+function minimax() {
+    let moves = [];
+    return moves;
+}
